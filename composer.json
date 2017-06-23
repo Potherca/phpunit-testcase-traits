@@ -1,0 +1,37 @@
+{
+  "authors": [
+    {
+      "email": "potherca@gmail.com",
+      "homepage": "https://potherca",
+      "name": "Ben Peachey (Potherca)",
+      "role": "Author"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Potherca\\PhpUnit\\": "./"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "description": "Traits that offer helper functions to be used in PHPUnit TestCases.",
+  "homepage": "https://gist.github.com/Potherca/c18d2772ecf2485dd4fa701e4abc7881/",
+  "keywords": [
+    "helper",
+    "phpunit",
+    "potherca",
+    "test-case",
+    "testing",
+    "tests",
+    "trait",
+    "traits"
+  ],
+  "license": "GPL-3.0",
+  "name": "potherca/phpunit-testcase-traits",
+  "require": {
+    "php": "~5.6 | ~7.0",
+    "phpunit/phpunit": "~4.0 | ~5.0 | ~6.0"
+  },
+  "type": "library"
+}
