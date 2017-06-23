@@ -25,9 +25,12 @@ For full details on how to use traits, please refer to [the section on traits in
 
 - **CreateDataProviderTrait** -- _Create data-provider arrays_  
   Creates a `key/value` pair from a given one-dimensional array of values,
-  which is meant to be returned from a data-provider method in a TestCase
-- **SetNonPublicPropertyTrait** -- _Change the value of a non-public class properties_
+  which is meant to be returned from a data-provider method in a TestCase.
 
+- **CreateObjectFromAbstractClassTrait** -- _Create an object instance from an abstract class_  
+  Creates a concrete object whose methods can be called and, thus, be tested.
+  
+- **SetNonPublicPropertyTrait** -- _Change the value of a non-public class properties_
 
 ## Colophon
 
