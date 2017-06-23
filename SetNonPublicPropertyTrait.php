@@ -66,7 +66,7 @@ trait SetNonPublicPropertyTrait
      *
      * @param object $subject
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
     final public function setNonPublicProperty($subject, $name, $value)
     {

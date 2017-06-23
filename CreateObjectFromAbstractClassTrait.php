@@ -59,6 +59,10 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *            $this->assertEqual($expected, $actual);
  *        }
  *    }
+ *
+ * @method fail($message)
+ * @method \PHPUnit_Framework_MockObject_MockBuilder getMockBuilder($className)
+ *
  */
 trait CreateObjectFromAbstractClassTrait
 {
@@ -69,7 +73,7 @@ trait CreateObjectFromAbstractClassTrait
      *
      * @return MockObject
      *
-     * @throws \PHPUnit_Framework_AssertionFailedError
+     * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      */
     final public function createObjectFromAbstractClass($className)
     {
@@ -87,7 +91,7 @@ trait CreateObjectFromAbstractClassTrait
     /**
      * @param string $className
      *
-     * @throws \PHPUnit_Framework_AssertionFailedError
+     * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      */
     private function validateClassExists($className)
     {
@@ -100,7 +104,7 @@ trait CreateObjectFromAbstractClassTrait
     /**
      * @param string $className
      *
-     * @throws \PHPUnit_Framework_AssertionFailedError
+     * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      */
     private function validateClassIsAbstract($className)
     {

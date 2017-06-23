@@ -70,6 +70,8 @@ namespace Potherca\PhpUnit;
  *        'integer: 1' => [1],
  *        'object: stdClass' => [new stdClass(array())],
  *    );
+ *
+ * @method fail($message)
  */
 trait CreateDataProviderTrait
 {
@@ -204,7 +206,8 @@ trait CreateDataProviderTrait
         }
 
         if ($this->sortByKey === true) {
-            array_multisort(array_keys($subjectWithKeys), SORT_NATURAL/*| SORT_FLAG_CASE*/, $subjectWithKeys);
+            $keys = array_keys($subjectWithKeys);
+            array_multisort($keys, SORT_NATURAL/*| SORT_FLAG_CASE*/, $subjectWithKeys);
         }
 
         return $subjectWithKeys;
