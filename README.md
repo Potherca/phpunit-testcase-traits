@@ -21,6 +21,12 @@ of that trait can then be used in the defined class.
 
 For full details on how to use traits, please refer to [the section on traits in the PHP manual][php-traits].
 
+## Available traits
+
+- **CreateDataProviderTrait** -- _Create data-provider arrays_  
+  Creates a `key/value` pair from a given one-dimensional array of values,
+  which is meant to be returned from a data-provider method in a TestCase
+
 ## Colophon
 
 - **Author**: Created by [Potherca][potherca].
