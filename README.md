@@ -38,10 +38,13 @@ For full details on how to use traits, please refer to [the section on traits in
 ## Colophon
 
 - **Author**: Created by [Potherca][potherca].
+- **Homepage**: [packagist][packagist-page] / [git-repo]
 - **License**: Licensed under the  [GPL-3.0 license][gpl-3] (GNU General Public License v3.0)
 
+[git-repo]: https://gist.github.com/Potherca/c18d2772ecf2485dd4fa701e4abc7881/edit
 [gpl-3]: ./LICENSE.md
 [license-badge]: https://img.shields.io/badge/License-GPL--3.0-blue.svg
+[packagist-page]: https://packagist.org/packages/potherca/phpunit-testcase-traits
 [php-traits]: http://php.net/manual/en/language.oop5.traits.php
 [potherca]: http://pother.ca/
 [project-stage-badge]: http://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
