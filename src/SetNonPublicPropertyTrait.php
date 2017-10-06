@@ -38,9 +38,9 @@ namespace Potherca\PhpUnit;
  *        }
  *    }
  *
- *    class ExampleTest extends PHPUnit\Framework\TestCase
+ *    class ExampleTest extends \PHPUnit\Framework\TestCase
  *    {
- *        use \Potherca\PhpUnit\SetInvisiblePropertyTrait;
+ *        use \Potherca\PhpUnit\SetNonPublicPropertyTrait;
  *
  *        const MOCK_VALUE = 'mock-value';
  *
@@ -48,17 +48,35 @@ namespace Potherca\PhpUnit;
  *        {
  *            $example = new Example();
  *
- *            $this->setInvisibleProperty($example, 'name', self::MOCK_VALUE);
+ *            $this->setNonPublicProperty($example, 'name', self::MOCK_VALUE);
  *
  *            $expected = self::MOCK_VALUE;
  *            $actual = $example->getName();
  *
- *            $this->assertEqual($expected, $actual);
+ *            $this->assertEquals($expected, $actual);
  *        }
  *    }
  */
 trait SetNonPublicPropertyTrait
 {
+    ////////////////////////////// TRAIT PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
+
+    /** @var string */
+    private $class;
+
+    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    private function getTraitShimClass()
+    {
+        if ($this->class === null) {
+            $this->class = $this->createClassForTrait(__TRAIT__);
+        }
+
+        return $this->class;
+    }
+
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
@@ -70,40 +88,7 @@ trait SetNonPublicPropertyTrait
      */
     final public function setNonPublicProperty($subject, $name, $value)
     {
-        $reflectionObject = new \ReflectionObject($subject);
-
-        $properties = $this->getProperties($reflectionObject);
-
-        array_walk($properties, function (\ReflectionProperty $reflectionProperty) use ($subject, $name, $value) {
-            if ($reflectionProperty->getName() === $name) {
-
-                $reflectionProperty->setAccessible(true);
-                $reflectionProperty->setValue($subject, $value);
-                // @CHECKME: This could spell trouble for protected properties
-                $reflectionProperty->setAccessible(false);
-            }
-        });
-    }
-
-    ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    /**
-     * @param $reflectionObject
-     *
-     * @return array
-     */
-    private function getProperties(\ReflectionObject $reflectionObject)
-    {
-        $properties = $reflectionObject->getProperties();
-
-        $reflectionClass = $reflectionObject;
-
-        while ($parent = $reflectionClass->getParentClass()) {
-            $properties = array_merge($properties, $parent->getProperties());
-            $reflectionClass = $parent;
-        }
-
-        return $properties;
+        call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
     }
 }
 

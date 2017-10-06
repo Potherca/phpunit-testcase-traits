@@ -37,7 +37,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *
  *        public function sayName()
  *        {
- *            return $this->>getName();
+ *            return $this->getName();
  *        }
  *    }
  *
@@ -56,7 +56,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *            $expected = self::MOCK_VALUE;
  *            $actual = $example->sayName();
  *
- *            $this->assertEqual($expected, $actual);
+ *            $this->assertEquals($expected, $actual);
  *        }
  *    }
  *
@@ -66,6 +66,24 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 trait CreateObjectFromAbstractClassTrait
 {
+    ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
+
+    /** @var string */
+    private $class;
+
+    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    private function getTraitShimClass()
+    {
+        if ($this->class === null) {
+            $this->class = $this->createClassForTrait(__TRAIT__);
+        }
+
+        return $this->class;
+    }
+
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
@@ -77,41 +95,7 @@ trait CreateObjectFromAbstractClassTrait
      */
     final public function createObjectFromAbstractClass($className)
     {
-        $this->validateClassExists($className);
-        $this->validateClassIsAbstract($className);
-
-        return $this->getMockBuilder($className)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass()
-        ;
-    }
-
-    ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    /**
-     * @param string $className
-     *
-     * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
-     */
-    private function validateClassExists($className)
-    {
-        if (class_exists($className) === false) {
-            $message = vsprintf('Can not create class "%s". No such class exists', [$className]);
-            $this->fail($message);
-        }
-    }
-
-    /**
-     * @param string $className
-     *
-     * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
-     */
-    private function validateClassIsAbstract($className)
-    {
-        if (is_callable([$className, '__construct']) === true) {
-            $message = vsprintf('Can not create class "%s". Class exists but is not abstract', [$className]);
-            $this->fail($message);
-        }
+        return call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
     }
 }
 

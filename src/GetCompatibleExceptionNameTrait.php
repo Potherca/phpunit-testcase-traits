@@ -64,7 +64,26 @@ namespace Potherca\PhpUnit;
  */
 trait GetCompatibleExceptionNameTrait
 {
+    ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
+
+    /** @var string */
+    private $class;
+
+    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    private function getTraitShimClass()
+    {
+        if ($this->class === null) {
+            $this->class = $this->createClassForTrait(__TRAIT__);
+        }
+
+        return $this->class;
+    }
+
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     /**
      * @param string $exceptionName
      *
@@ -75,63 +94,7 @@ trait GetCompatibleExceptionNameTrait
      */
     final public function getCompatibleExceptionName($exceptionName)
     {
-        $matchingExceptionName = '';
-
-        $exceptionName = ltrim($exceptionName, '\\');
-
-        if ($this->isPhpUnitExceptionNeeded($exceptionName) === false) {
-            if ($exceptionName === 'DivisionByZeroError') {
-                $this->expectExceptionMessage('Division by zero');
-                $matchingExceptionName = '\PHPUnit_Framework_Error_Warning';
-            } else {
-                $matchingExceptionName = '\\'.$exceptionName;
-            }
-        } else {
-            if ($exceptionName === 'ParseError') {
-                $this->markTestSkipped('Parse errors can not be caught in PHP5');
-            } else {
-                $matchingExceptionName = $this->getMatchingExceptionName($exceptionName);
-            }
-        }
-
-        return $matchingExceptionName;
-    }
-
-    ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    /**
-     * @param string $exceptionName
-     *
-     * @return bool
-     */
-    private function isPhpUnitExceptionNeeded($exceptionName)
-    {
-        return class_exists('\\' . $exceptionName) === false
-            /* @NOTE: The line below validates that the Exception does not extend the PHP7 "Throwable" interface */
-            || class_implements('\\' . $exceptionName) === [];
-    }
-
-    /**
-     * @param $exceptionName
-     *
-     * @return string
-     */
-    private function getMatchingExceptionName($exceptionName)
-    {
-        $matchingExceptions = [
-            'ArgumentCountError' => '\PHPUnit_Framework_Error',
-            'AssertionError' => '\PHPUnit_Framework_Error_Warning',
-            'DivisionByZeroError' => '\PHPUnit_Framework_Error_Warning',
-            'Error' => '\PHPUnit_Framework_Error',
-            'TypeError' => '\PHPUnit_Framework_Error',
-        ];
-
-        if (array_key_exists($exceptionName, $matchingExceptions) === false) {
-            $errorMessage = vsprintf('Could not find an exception for class name "%s"', [$exceptionName]);
-            $this->fail($errorMessage);
-        }
-
-        return $matchingExceptions[$exceptionName];
+        return call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
     }
 }
 
