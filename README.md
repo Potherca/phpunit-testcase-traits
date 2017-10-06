@@ -21,6 +21,50 @@ of that trait can then be used in the defined class.
 
 For full details on how to use traits, please refer to [the section on traits in the PHP manual][php-traits].
 
+### PHP 5.3 compatibility
+
+Traits were not introduced until PHP5.4 so for older versions (i.e. PHP5.3) 
+another way to load the trait's functionality is needed. A `traitShim` function 
+is provided that can be used from a [magic `__call` method][__call-magic-method].
+
+This is done by adding the following code to each (abstract base) test-case were
+a Trait is to be used<sup>(1)</sup>:
+
+```php
+
+class ExampleTest extends \PHPUnit_Framework_TestCase
+{
+    // ....
+
+    final public function __call($name, array $parameters)
+    {
+        require_once '/path/to/src/Shim/function.traitShim.php';
+
+        return \Potherca\PhpUnit\Shim\traitShim($this, $name, $parameters);
+    }
+
+    // ....
+}
+```
+
+The public API of _all_ traits can then be used. 
+
+In order to aid text-editors and IDEs in offering auto-completion, the following doc-block can be added to the
+test-case class:
+
+```php
+/**
+ * @method array[] createDataProvider(array $subject)
+ * @method \PHPUnit_Framework_MockObject_MockObject | \PHPUnit\Framework\MockObject\MockObject createObjectFromAbstractClass($className)
+ * @method string getCompatibleExceptionName($exceptionName)
+ * @method void setDataProviderMaximumKeyLength($length)
+ * @method void setDataProviderSortByKey($sort)
+ * @method void setNonPublicProperty($subject, $name, $value)
+ */
+```
+
+<sup>(1)</sup> Alternatively, the `src/Shim/function.traitShim.php` could be [loaded using composer's autoloader][composer-load-files].
+
 ## Available traits
 
 - **CreateDataProviderTrait** -- _Create data-provider arrays._  
@@ -34,6 +78,10 @@ For full details on how to use traits, please refer to [the section on traits in
 
 - **SetNonPublicPropertyTrait** -- _Change the value of a non-public class properties._
 
+Functioning usage examples are available in the [`example`](./example) directory. 
+All examples can be run with 'phpunit`. Simply use the `--config` flag to point 
+to the desired config file (either `example-php-phpunit.xml` for the traits or 
+`example-php53-phpunit.xml` for the PHP5.3 compatible Trait shims).
 
 ## Colophon
 
@@ -41,6 +89,8 @@ For full details on how to use traits, please refer to [the section on traits in
 - **Homepage**: [packagist][packagist-page] / [git-repo]
 - **License**: Licensed under the  [GPL-3.0 license][gpl-3] (GNU General Public License v3.0)
 
+[__call-magic-method]: http://php.net/manual/en/language.oop5.overloading.php#object.call
+[composer-load-files]: https://getcomposer.org/doc/04-schema.md#files
 [git-repo]: https://gist.github.com/Potherca/c18d2772ecf2485dd4fa701e4abc7881/edit
 [gpl-3]: ./LICENSE.md
 [license-badge]: https://img.shields.io/badge/License-GPL--3.0-blue.svg
