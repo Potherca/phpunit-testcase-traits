@@ -1,0 +1,52 @@
+<?php
+
+namespace Potherca\PHPUnit\Example\CreateDataProvider;
+
+class ExampleTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * As PHP5.3 does not support traits, __call is (a)bused instead of the trait.
+     *
+     use \Potherca\PhpUnit\CreateDataProviderTrait;
+     *
+     * @param string $name
+     * @param array $parameters
+     *
+     * @return mixed
+     *
+     * @method setNonPublicProperty($subject, $name, $value)
+     */
+    final public function __call($name, array $parameters)
+    {
+        require_once __DIR__.'/../../src/Shim/function.traitShim.php';
+
+        return \Potherca\PhpUnit\Shim\traitShim($this, $name, $parameters);
+    }
+
+    /** @var array */
+    private $values = array(
+        -1,
+        0,
+        1,
+        true,
+        false,
+        null,
+        array(null),
+        array(),
+    );
+
+    /**
+     * @dataProvider provideValues
+     */
+    final public function test($actual)
+    {
+        $expected = $this->values;
+
+        $this->assertContains($actual, $expected);
+    }
+
+    final public function provideValues()
+    {
+        return $this->createDataProvider($this->values);
+    }
+}

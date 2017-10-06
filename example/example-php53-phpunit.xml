@@ -5,9 +5,8 @@
     colors="true"
 >
     <testsuites>
-        <testsuite name="Example Test Suite">
-            <directory suffix="Example.php">./</directory>
-            <exclude>./PHP5.3</exclude>
+        <testsuite name="PHP 5.3 compatible Example Test Suite">
+            <directory suffix="Example.php">./PHP5.3</directory>
         </testsuite>
     </testsuites>
 </phpunit>
