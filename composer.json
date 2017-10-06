@@ -16,7 +16,7 @@
     "sort-packages": true
   },
   "description": "Traits that offer helper functions to be used in PHPUnit TestCases.",
-  "homepage": "https://gist.github.com/Potherca/c18d2772ecf2485dd4fa701e4abc7881/",
+  "homepage": "https://github.com/Potherca/phpunit-testcase-traits",
   "keywords": [
     "helper",
     "phpunit",

@@ -86,12 +86,12 @@ to the desired config file (either `example-php-phpunit.xml` for the traits or
 ## Colophon
 
 - **Author**: Created by [Potherca][potherca].
-- **Homepage**: [packagist][packagist-page] / [git-repo]
+- **Homepage**: [packagist][packagist-page] / [git-repo][git-repo]
 - **License**: Licensed under the  [GPL-3.0 license][gpl-3] (GNU General Public License v3.0)
 
 [__call-magic-method]: http://php.net/manual/en/language.oop5.overloading.php#object.call
 [composer-load-files]: https://getcomposer.org/doc/04-schema.md#files
-[git-repo]: https://gist.github.com/Potherca/c18d2772ecf2485dd4fa701e4abc7881/edit
+[git-repo]: https://github.com/Potherca/phpunit-testcase-traits
 [gpl-3]: ./LICENSE.md
 [license-badge]: https://img.shields.io/badge/License-GPL--3.0-blue.svg
 [packagist-page]: https://packagist.org/packages/potherca/phpunit-testcase-traits
