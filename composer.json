@@ -2,7 +2,7 @@
   "authors": [
     {
       "email": "potherca@gmail.com",
-      "homepage": "https://potherca",
+      "homepage": "https://pother.ca",
       "name": "Ben Peachey (Potherca)",
       "role": "Author"
     }
@@ -30,7 +30,7 @@
   "license": "GPL-3.0",
   "name": "potherca/phpunit-testcase-traits",
   "require": {
-    "php": "~5.6 | ~7.0",
+    "php": "~5.3 | ~7.0",
     "phpunit/phpunit": "~4.0 | ~5.0 | ~6.0"
   },
   "type": "library"
