@@ -79,7 +79,7 @@ test-case class:
 - **SetNonPublicPropertyTrait** -- _Change the value of a non-public class properties._
 
 Functioning usage examples are available in the [`example`](./example) directory. 
-All examples can be run with 'phpunit`. Simply use the `--config` flag to point 
+All examples can be run with `phpunit`. Simply use the `--config` flag to point 
 to the desired config file (either `example-php-phpunit.xml` for the traits or 
 `example-php53-phpunit.xml` for the PHP5.3 compatible Trait shims).
 
