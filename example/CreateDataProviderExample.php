@@ -1,4 +1,5 @@
 <?php
+
 namespace Potherca\PHPUnit\Example\CreateDataProvider;
 
 class ExampleTest extends \PHPUnit\Framework\TestCase
