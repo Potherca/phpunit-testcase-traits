@@ -75,34 +75,24 @@ namespace Potherca\PhpUnit;
  */
 trait CreateDataProviderTrait
 {
-    ////////////////////////////// TRAIT PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
-
-    /** @var string */
-    private $class;
-
     //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    private function getTraitShimClass()
-    {
-        if ($this->class === null) {
-            $this->class = $this->createClassForTrait(__TRAIT__);
-        }
-
-        return $this->class;
-    }
 
     /** @param int $length */
     final public function setDataProviderMaximumKeyLength($length)
     {
-        call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 
     /** @param bool $sort */
     final public function setDataProviderSortByKey($sort)
     {
-        call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -114,7 +104,10 @@ trait CreateDataProviderTrait
      */
     final public function createDataProvider(array $subject)
     {
-        return call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        return call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 }
 

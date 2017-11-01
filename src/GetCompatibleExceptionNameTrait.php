@@ -64,24 +64,6 @@ namespace Potherca\PhpUnit;
  */
 trait GetCompatibleExceptionNameTrait
 {
-    ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
-
-    /** @var string */
-    private $class;
-
-    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    private function getTraitShimClass()
-    {
-        if ($this->class === null) {
-            $this->class = $this->createClassForTrait(__TRAIT__);
-        }
-
-        return $this->class;
-    }
-
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
@@ -94,7 +76,10 @@ trait GetCompatibleExceptionNameTrait
      */
     final public function getCompatibleExceptionName($exceptionName)
     {
-        return call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        return call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 }
 

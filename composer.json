@@ -9,8 +9,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "Potherca\\PhpUnit\\": "./src/"
-    }
+      "Potherca\\PhpUnit\\": "src/"
+    },
+    "files": [
+      "src/function.createShimForTrait.php"
+    ]
   },
   "config": {
     "sort-packages": true

@@ -59,24 +59,6 @@ namespace Potherca\PhpUnit;
  */
 trait SetNonPublicPropertyTrait
 {
-    ////////////////////////////// TRAIT PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
-
-    /** @var string */
-    private $class;
-
-    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    private function getTraitShimClass()
-    {
-        if ($this->class === null) {
-            $this->class = $this->createClassForTrait(__TRAIT__);
-        }
-
-        return $this->class;
-    }
-
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
@@ -88,7 +70,10 @@ trait SetNonPublicPropertyTrait
      */
     final public function setNonPublicProperty($subject, $name, $value)
     {
-        call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 }
 

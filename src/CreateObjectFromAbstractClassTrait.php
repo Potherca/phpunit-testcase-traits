@@ -66,24 +66,6 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 trait CreateObjectFromAbstractClassTrait
 {
-    ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    use \Potherca\PhpUnit\Traits\CreateClassForTraitTrait;
-
-    /** @var string */
-    private $class;
-
-    //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    private function getTraitShimClass()
-    {
-        if ($this->class === null) {
-            $this->class = $this->createClassForTrait(__TRAIT__);
-        }
-
-        return $this->class;
-    }
-
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
@@ -95,7 +77,10 @@ trait CreateObjectFromAbstractClassTrait
      */
     final public function createObjectFromAbstractClass($className)
     {
-        return call_user_func_array([$this->getTraitShimClass(), __FUNCTION__], func_get_args());
+        return call_user_func_array(
+            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            func_get_args()
+        );
     }
 }
 
