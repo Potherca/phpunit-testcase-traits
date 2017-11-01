@@ -14,21 +14,28 @@ class CreateObjectFromAbstractClass extends AbstractTraitShim
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
-     * @param $className
+     * @param string $className
+     *
+     * @param array|null $arguments
      *
      * @return MockObject
      *
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      */
-    final public function createObjectFromAbstractClass($className)
+    final public function createObjectFromAbstractClass($className, array $arguments = null)
     {
         $this->validateClassExists($className);
         $this->validateClassIsAbstract($className);
 
-        return $this->getTestcase()->getMockBuilder($className)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass()
-        ;
+        $mockBuilder = $this->getTestcase()->getMockBuilder($className);
+
+        if (is_array($arguments)) {
+            $mockBuilder->setConstructorArgs($arguments);
+        } else {
+            $mockBuilder->disableOriginalConstructor();
+        }
+
+        return $mockBuilder->getMockForAbstractClass();
     }
 
     ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
