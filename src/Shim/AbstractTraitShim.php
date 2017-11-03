@@ -59,6 +59,44 @@ abstract class AbstractTraitShim
 
         return call_user_func_array(array($this, $function), $parameter);
     }
+
+    /**
+     * Get the namespaced or non-namespaced name of a given class, depending on which one exists
+     *
+     * @param string $class
+     *
+     * @return string
+     *
+     * @throws \InvalidArgumentException
+     */
+    final public function getExistingClassName($class)
+    {
+        $class = ltrim($class, '\\');
+
+        $nonNamespacedClass = str_replace('\\', '_', $class);
+        $namespacedClass = str_replace('_', '\\', $class);
+
+        $subjects = array($namespacedClass, $nonNamespacedClass);
+
+        $existingClass = null;
+
+        array_walk($subjects, function ($class) use (&$existingClass) {
+            $class = '\\' . $class;
+            if (class_exists($class) === true) {
+                $existingClass = $class;
+            }
+        });
+
+        if ($existingClass === null) {
+            $message = vsprintf(
+                'Could not find class for "%". Both "%s" and "%s" do not exist',
+                array($class, $nonNamespacedClass, $namespacedClass)
+            );
+            throw new \InvalidArgumentException($message);
+        }
+
+        return $existingClass;
+    }
 }
 
 /*EOF*/
