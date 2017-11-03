@@ -2,7 +2,7 @@
 
 namespace Potherca\PhpUnit\Shim;
 
-class SetNonPublicProperty extends AbstractTraitShim
+class SetNonPublicProperty extends GetNonPublicProperty
 {
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -12,46 +12,19 @@ class SetNonPublicProperty extends AbstractTraitShim
      * @param object $subject
      * @param string $name
      * @param mixed $value
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
     final public function setNonPublicProperty($subject, $name, $value)
     {
-        $reflectionObject = new \ReflectionObject($subject);
+        $originalValue = $this->getNonPublicProperty($subject, $name);
 
-        $properties = $this->getProperties($reflectionObject);
+        $reflectionProperty = $this->getPropertyFromObject($subject, $name);
+        $reflectionProperty->setValue($subject, $value);
 
-        // @FIXME: Use array_filter && array_pop to avoid problems with large property lists
-        array_walk($properties, function (\ReflectionProperty $reflectionProperty) use ($subject, $name, $value) {
-            if ($reflectionProperty->getName() === $name) {
-
-                $reflectionProperty->setAccessible(true);
-                $reflectionProperty->setValue($subject, $value);
-                // @CHECKME: This could spell trouble for protected properties
-                $reflectionProperty->setAccessible(false);
-            }
-        });
-
-        // @TODO: Return current value of $reflectionProperty
-    }
-
-    ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-    /**
-     * @param $reflectionObject
-     *
-     * @return array
-     */
-    private function getProperties(\ReflectionObject $reflectionObject)
-    {
-        $properties = $reflectionObject->getProperties();
-
-        $reflectionClass = $reflectionObject;
-
-        while ($parent = $reflectionClass->getParentClass()) {
-            $properties = array_merge($properties, $parent->getProperties());
-            $reflectionClass = $parent;
-        }
-
-        return $properties;
+        return $originalValue;
     }
 }
 
