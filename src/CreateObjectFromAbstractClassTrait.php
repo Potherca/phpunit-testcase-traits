@@ -69,13 +69,14 @@ trait CreateObjectFromAbstractClassTrait
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
-     * @param $className
+     * @param string $className
+     * @param array|null $arguments
      *
      * @return MockObject
      *
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      */
-    final public function createObjectFromAbstractClass($className)
+    final public function createObjectFromAbstractClass($className, array $arguments = null)
     {
         return call_user_func_array(
             \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
