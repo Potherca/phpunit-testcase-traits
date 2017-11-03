@@ -33,7 +33,7 @@ class ExampleTest extends \PHPUnit\Framework\TestCase
 
     const MOCK_VALUE = 'mock-value';
 
-    public function testHiddenProperty()
+    public function testChangeHiddenProperty()
     {
         $example = new Example();
 

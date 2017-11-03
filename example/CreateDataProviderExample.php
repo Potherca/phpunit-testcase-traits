@@ -21,7 +21,7 @@ class ExampleTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideValues
      */
-    final public function test($actual)
+    final public function testDataProvider($actual)
     {
         $expected = $this->values;
 
