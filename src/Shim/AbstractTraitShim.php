@@ -2,7 +2,7 @@
 
 namespace Potherca\PhpUnit\Shim;
 
-abstract class AbstractTraitShim
+abstract class AbstractTraitShim implements TraitShimInterface
 {
     ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -51,6 +51,11 @@ abstract class AbstractTraitShim
         $this->testcase = $testcase;
     }
 
+    /**
+     * @param array $parameter
+     *
+     * @return mixed
+     */
     final public function __invoke(array $parameter)
     {
         $class = get_class($this);
