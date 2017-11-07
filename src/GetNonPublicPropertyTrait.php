@@ -60,15 +60,16 @@ trait GetNonPublicPropertyTrait
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
-     * Sets a given value for a given (private or protected) property on a given object
+     * Gets the value for a given (private or protected) property on a given object
      *
      * @param object $subject
      * @param string $name
-     * @param mixed $value
+     *
+     * @return mixed
      */
-    final public function getNonPublicProperty($subject, $name, $value)
+    final public function getNonPublicProperty($subject, $name)
     {
-        call_user_func_array(
+        return call_user_func_array(
             \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
             func_get_args()
         );

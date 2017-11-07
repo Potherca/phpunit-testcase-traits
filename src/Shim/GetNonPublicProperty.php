@@ -16,7 +16,7 @@ class GetNonPublicProperty extends AbstractTraitShim
      * @param object $subject
      * @param string $name
      *
-     * @return \ReflectionProperty
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -28,10 +28,10 @@ class GetNonPublicProperty extends AbstractTraitShim
     }
 
     /**
-     * @param $subject
-     * @param $name
+     * @param object $subject
+     * @param string $name
      *
-     * @return mixed|\ReflectionProperty
+     * @return \ReflectionProperty
      *
      * @throws \InvalidArgumentException
      */
@@ -58,7 +58,7 @@ class GetNonPublicProperty extends AbstractTraitShim
     ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     /**
-     * @param $subject
+     * @param object $subject
      *
      * @return \ReflectionProperty[]
      */
@@ -76,9 +76,9 @@ class GetNonPublicProperty extends AbstractTraitShim
     }
 
     /**
-     * @param $reflectionObject
+     * @param \ReflectionObject $reflectionObject
      *
-     * @return array
+     * @return \ReflectionProperty[]
      */
     private function getProperties(\ReflectionObject $reflectionObject)
     {
