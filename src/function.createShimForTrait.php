@@ -45,9 +45,8 @@ function createShimForTrait($testCase, $methodName, $traitName)
             $message = vsprintf('Could not find class "%s" to create for trait "%s"', array($shimClass, $traitName));
             throw new \InvalidArgumentException($message);
         }
-
-        $implements = class_implements(class_implements($shimClass));
-        $interface = '\Potherca\PhpUnit\Shim\TraitShimInterface';
+        $implements = class_implements($shimClass);
+        $interface = 'Potherca\PhpUnit\Shim\TraitShimInterface';
 
         if (in_array($interface, $implements, true) === false) {
             $message = vsprintf(
