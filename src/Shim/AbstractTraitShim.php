@@ -66,15 +66,18 @@ abstract class AbstractTraitShim implements TraitShimInterface
     }
 
     /**
-     * Get the namespaced or non-namespaced name of a given class, depending on which one exists
+     * Get the namespaced or non-namespaced name of a given class, depending on
+     * which one exists. In case both names do not match one-on-one, an
+     * alternative name can be given.
      *
      * @param string $class
+     * @param string $alternative
      *
      * @return string
      *
      * @throws \InvalidArgumentException
      */
-    final public function getExistingClassName($class)
+    final public function getExistingClassName($class, $alternative = '')
     {
         $class = ltrim($class, '\\');
 
@@ -93,11 +96,16 @@ abstract class AbstractTraitShim implements TraitShimInterface
         });
 
         if ($existingClass === null) {
-            $message = vsprintf(
-                'Could not find class for "%". Both "%s" and "%s" do not exist',
-                array($class, $nonNamespacedClass, $namespacedClass)
-            );
-            throw new \InvalidArgumentException($message);
+
+            if ($alternative === '') {
+                $message = vsprintf(
+                    'Could not find class for "%". Both "%s" and "%s" do not exist',
+                    array($class, $nonNamespacedClass, $namespacedClass)
+                );
+                throw new \InvalidArgumentException($message);
+            }
+
+            $existingClass = $this->getExistingClassName($alternative);
         }
 
         return $existingClass;
