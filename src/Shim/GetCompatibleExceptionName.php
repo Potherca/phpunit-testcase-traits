@@ -18,12 +18,20 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      *
      * @return string
      *
+     * @throws \InvalidArgumentException
+     * @throws \PHPUnit_Framework_Exception | \PHPUnit\Framework\Exception
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_SkippedTestError|\PHPUnit\Framework\SkippedTestError
      */
     final public function getCompatibleExceptionName($exceptionName)
     {
         $matchingExceptionName = '';
+
+        try {
+            $exceptionName = $this->getExistingClassName($exceptionName);
+        } catch (\InvalidArgumentException $e) {
+            // Not an existing class, needs conversion
+        }
 
         $exceptionName = ltrim($exceptionName, '\\');
 
@@ -38,7 +46,14 @@ class GetCompatibleExceptionName extends AbstractTraitShim
             if ($exceptionName === 'ParseError') {
                 $this->getTestcase()->markTestSkipped('Parse errors can not be caught in PHP5');
             } else {
-                $matchingExceptionName = $this->getMatchingExceptionName($exceptionName);
+                $exceptionName = $this->getMatchingExceptionName($exceptionName);
+
+                $alternative = '';
+                if ($exceptionName === '\PHPUnit_Framework_Error') {
+                    $alternative = 'PHPUnit\Framework\Error\Error';
+                }
+
+                $matchingExceptionName = $this->getExistingClassName($exceptionName, $alternative);
             }
         }
 
@@ -63,6 +78,8 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      * @param $exceptionName
      *
      * @return string
+     *
+     * @throws \PHPUnit\Framework_AssertionFailedError | \PHPUnit\Framework\AssertionFailedError
      */
     private function getMatchingExceptionName($exceptionName)
     {
