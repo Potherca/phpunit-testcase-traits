@@ -22,44 +22,70 @@ namespace Potherca\PhpUnit;
  *
  * @throws \InvalidArgumentException If no Shim class can be found for a given trait
  *
- * @return string[]
+ * @return Callable
  */
 function createShimForTrait($testCase, $methodName, $traitName)
 {
     static $class;
 
-    if (isset($class[$traitName]) === false) {
+    $key = $traitName.'::'.$methodName;
 
-        $delimiter = '\\';
+    if (isset($class[$key]) === false) {
 
-        $name = substr($traitName, 0, -5); // 5 = "Trait"
-        $parts = explode($delimiter, $name);
+        $subject = $testCase;
 
-        $shimClass = array_pop($parts);
-        $parts[] = 'Shim';
-        $parts[] = $shimClass;
+        $exists = false;
+        do {
 
-        $shimClass = implode($delimiter, $parts);
+            if (
+                ($subject === 'PHPUnit\\Framework\\TestCase' || $subject === 'PHPUnit_Framework_TestCase')
+                && method_exists($subject, $methodName) === true
+            ) {
+                $exists = $subject;
+            }
+        } while ($subject = get_parent_class($subject));
 
-        if (class_exists($shimClass) === false) {
-            $message = vsprintf('Could not find class "%s" to create for trait "%s"', array($shimClass, $traitName));
-            throw new \InvalidArgumentException($message);
+        if ($exists !== false) {
+            $class[$key] = $exists;
+        } else {
+            // Only create shim class if native function does not exist
+
+            $start = strlen(__NAMESPACE__)+1;
+            $end = -5;  // 5 = "Trait"
+            $name = substr($traitName, $start, $end);
+
+            $shimClass = vsprintf('%s\\Shim\\%s', array(__NAMESPACE__, $name));
+
+            if (method_exists($shimClass, $methodName) === false) {
+                /* CHECKME: Shouldn't we always check METHOD instead of TRAIT as class and method are equals for shims ? */
+                /* Shim class does not match trait name, fallback to Shim class based on method name */
+                $end = strrpos($shimClass, '\\');
+                $name = substr($shimClass, 0, $end);
+
+                $shimClass = vsprintf('%s\\%s', array($name, ucfirst($methodName)));
+            }
+
+            if (class_exists($shimClass) === false) {
+                $message = vsprintf('Could not find class "%s" to create for trait "%s"', array($shimClass, $traitName));
+                throw new \InvalidArgumentException($message);
+            }
+
+            $implements = class_implements($shimClass);
+            $interface = 'Potherca\PhpUnit\Shim\TraitShimInterface';
+
+            if (in_array($interface, $implements, true) === false) {
+                $message = vsprintf(
+                    'Found class "%s" for trait "%s" but it does not implement "%s"',
+                    array($shimClass, $traitName, $interface)
+                );
+                throw new \InvalidArgumentException($message);
+            }
+
+            $class[$key] = new $shimClass($testCase);
         }
-        $implements = class_implements($shimClass);
-        $interface = 'Potherca\PhpUnit\Shim\TraitShimInterface';
-
-        if (in_array($interface, $implements, true) === false) {
-            $message = vsprintf(
-                'Found class "%s" for trait "%s" but it does not implement "%s"',
-                array($shimClass, $traitName, $interface)
-            );
-            throw new \InvalidArgumentException($message);
-        }
-
-        $class[$traitName] = new $shimClass($testCase);
     }
 
-    return array($class[$traitName], $methodName);
+    return array($class[$key], $methodName);
 }
 
 /*EOF*/
