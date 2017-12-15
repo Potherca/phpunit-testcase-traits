@@ -12,7 +12,9 @@
       "Potherca\\PhpUnit\\": "src/"
     },
     "files": [
-      "src/function.createShimForTrait.php"
+      "src/function.createShimForTrait.php",
+      "src/Shim/function.traitShim.php",
+      "src/Shim/testCaseShim.php"
     ]
   },
   "config": {
