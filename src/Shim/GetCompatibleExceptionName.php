@@ -84,10 +84,18 @@ class GetCompatibleExceptionName extends AbstractTraitShim
     private function getMatchingExceptionName($exceptionName)
     {
         $matchingExceptions = array(
+            // PHP 7.1 thrown when too few arguments are passed to a user-defined function or method.
             'ArgumentCountError' => '\PHPUnit_Framework_Error',
+            // PHP 7.0 thrown when an assertion made via assert() fails.
             'AssertionError' => '\PHPUnit_Framework_Error_Warning',
+            // PHP 7.0 thrown when an attempt is made to divide a number by zero.
             'DivisionByZeroError' => '\PHPUnit_Framework_Error_Warning',
+            // PHP 7.0 base class for all internal PHP errors.
             'Error' => '\PHPUnit_Framework_Error',
+            // PHP 7.0 thrown in one of three circumstances:
+            // - an argument type passed to a function does not match the declared parameter type.
+            // - a value returned from a function does not match the declared return type.
+            // - an invalid number of arguments are passed to a built-in PHP function (strict mode only).
             'TypeError' => '\PHPUnit_Framework_Error',
         );
 

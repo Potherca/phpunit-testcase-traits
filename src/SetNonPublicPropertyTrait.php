@@ -71,7 +71,7 @@ trait SetNonPublicPropertyTrait
     final public function setNonPublicProperty($subject, $name, $value)
     {
         call_user_func_array(
-            \Potherca\PhpUnit\createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }

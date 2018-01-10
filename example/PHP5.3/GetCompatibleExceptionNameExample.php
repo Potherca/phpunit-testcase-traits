@@ -23,9 +23,7 @@ class ExampleTest extends AbstractTestCase
      */
     final public function __call($name, array $parameters)
     {
-        require_once __DIR__.'/../../src/Shim/function.traitShim.php';
-
-        return \Potherca\PhpUnit\Shim\traitShim($this, $name, $parameters);
+        return \Potherca\PhpUnit\Shim\Util::traitShim($this, $name, $parameters);
     }
 
     public function testException()

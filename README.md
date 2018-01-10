@@ -38,9 +38,7 @@ class ExampleTest extends \PHPUnit_Framework_TestCase
 
     final public function __call($name, array $parameters)
     {
-        require_once '/path/to/src/Shim/function.traitShim.php';
-
-        return \Potherca\PhpUnit\Shim\traitShim($this, $name, $parameters);
+        return \Potherca\PhpUnit\Shim\Util::traitShim($this, $name, $parameters);
     }
 
     // ....

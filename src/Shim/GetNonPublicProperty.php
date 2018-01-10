@@ -24,7 +24,9 @@ class GetNonPublicProperty extends AbstractTraitShim
     {
         $reflectionProperty = $this->getPropertyFromObject($subject, $name);
 
-        return $reflectionProperty->getValue($subject);
+        $value = $reflectionProperty->getValue($subject);
+
+        return $value;
     }
 
     /**
