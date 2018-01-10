@@ -11,11 +11,7 @@
     "psr-4": {
       "Potherca\\PhpUnit\\": "src/"
     },
-    "files": [
-      "src/function.createShimForTrait.php",
-      "src/Shim/function.traitShim.php",
-      "src/Shim/testCaseShim.php"
-    ]
+    "files": ["src/Shim/testCaseShim.php"]
   },
   "config": {
     "sort-packages": true
