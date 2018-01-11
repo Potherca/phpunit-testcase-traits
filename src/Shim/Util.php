@@ -4,6 +4,9 @@ namespace Potherca\PhpUnit\Shim;
 
 class Util
 {
+    const NAMESPACE_PREFIX_LENGTH = 17; // = strlen('Potherca\\PhpUnit\\');
+    const NAMESPACE_SUFFIX_LENGTH = -5; // = strlen('Trait');
+
     /**
      * Traits were not introduced until PHP5.4 so for older versions (i.e. PHP5.3)
      * this method loads the trait's functionality. This function should be called
@@ -125,9 +128,7 @@ class Util
             } else {
                 // Only create shim class if native function does not exist
 
-                $start = strlen('Potherca\PhpUnit')+1;
-                $end = -5;  // 5 = "Trait"
-                $name = substr($traitName, $start, $end);
+                $name = substr($traitName, self::NAMESPACE_PREFIX_LENGTH, self::NAMESPACE_SUFFIX_LENGTH);
 
                 $shimClass = vsprintf('%s\\%s', array(__NAMESPACE__, $name));
 
