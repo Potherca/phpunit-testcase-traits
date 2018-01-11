@@ -11,7 +11,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase {}
 
 class ExampleTest extends AbstractTestCase
 {
-    use \Potherca\PhpUnit\GetCompatibleExceptionNameTrait;
+    use \Potherca\PhpUnit\Traits\GetCompatibleExceptionNameTrait;
 
     public function testException()
     {

@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Potherca\PhpUnit;
+namespace Potherca\PhpUnit\Traits;
 
 /**
  * Creates a "key => [value]" pair from a given one-dimensional array of values,
@@ -33,7 +33,7 @@ namespace Potherca\PhpUnit;
  *
  *    class ExampleTest extends PHPUnit\Framework\TestCase
  *    {
- *        use \Potherca\PhpUnit\CreateDataProviderTrait;
+ *        use \Potherca\PhpUnit\Traits\CreateDataProviderTrait;
  *
  *        public function provideValidValues()
  *        {

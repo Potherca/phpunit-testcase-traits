@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Potherca\PhpUnit;
+namespace Potherca\PhpUnit\Traits;
 
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
@@ -43,7 +43,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *
  *    class AbstractExampleTest extends PHPUnit\Framework\TestCase
  *    {
- *        use \Potherca\PhpUnit\CreateObjectFromAbstractClassTrait;
+ *        use \Potherca\PhpUnit\Traits\CreateObjectFromAbstractClassTrait;
  *
  *        const MOCK_VALUE = 'mock-value';
  *

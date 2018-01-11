@@ -4,7 +4,7 @@ namespace Potherca\PHPUnit\Example\CreateDataProvider;
 
 class ExampleTest extends \PHPUnit\Framework\TestCase
 {
-    use \Potherca\PhpUnit\CreateDataProviderTrait;
+    use \Potherca\PhpUnit\Traits\CreateDataProviderTrait;
 
     /** @var array */
     private $values = array(

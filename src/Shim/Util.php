@@ -4,7 +4,7 @@ namespace Potherca\PhpUnit\Shim;
 
 class Util
 {
-    const NAMESPACE_PREFIX_LENGTH = 17; // = strlen('Potherca\\PhpUnit\\');
+    const NAMESPACE_PREFIX_LENGTH = 24; // = strlen('Potherca\\PhpUnit\\Traits\\');
     const NAMESPACE_SUFFIX_LENGTH = -5; // = strlen('Trait');
 
     /**

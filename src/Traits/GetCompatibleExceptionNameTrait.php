@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Potherca\PhpUnit;
+namespace Potherca\PhpUnit\Traits;
 
 /**
  * Provide names of PHP5 compatible PHPUnit_Framework_Exception for given (new) PHP7 Exceptions.
@@ -42,7 +42,7 @@ namespace Potherca\PhpUnit;
  *
  *    class ExampleTest extends PHPUnit\Framework\TestCase
  *    {
- *        use \Potherca\PhpUnit\GetCompatibleExceptionNameTrait;
+ *        use \Potherca\PhpUnit\Traits\GetCompatibleExceptionNameTrait;
  *
  *        public function testException()
  *        {

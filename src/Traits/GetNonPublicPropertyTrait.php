@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Potherca\PhpUnit;
+namespace Potherca\PhpUnit\Traits;
 
 /**
  * Retrieve the value of a non-public property of an object.
@@ -40,7 +40,7 @@ namespace Potherca\PhpUnit;
  *
  *    class ExampleTest extends \PHPUnit\Framework\TestCase
  *    {
- *        use \Potherca\PhpUnit\GetNonPublicPropertyTrait;
+ *        use \Potherca\PhpUnit\Traits\GetNonPublicPropertyTrait;
  *
  *        const MOCK_VALUE = 'mock-value';
  *
