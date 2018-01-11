@@ -9,9 +9,10 @@
   ],
   "autoload": {
     "psr-4": {
+      "": "src/Shim/Compatibility/TestCase/",
+      "PHPUnit\\Framework\\": "src/Shim/Compatibility/TestCase/",
       "Potherca\\PhpUnit\\": "src/"
-    },
-    "files": ["src/Shim/testCaseShim.php"]
+    }
   },
   "config": {
     "sort-packages": true
