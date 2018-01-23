@@ -45,6 +45,14 @@ class GetCompatibleExceptionName extends AbstractTraitShim
         } else {
             if ($exceptionName === 'ParseError') {
                 $this->getTestcase()->markTestSkipped('Parse errors can not be caught in PHP5');
+            } elseif ($exceptionName === 'ArgumentCountError') {
+                // PHP 7.1 thrown when too few arguments are passed to a user-defined function or method.
+                $alternative = '\\PHPUnit_Framework_Error_Warning';
+
+                $matchingExceptionName = '\\PHPUnit\\Framework\\Error\\Warning';
+                if (class_exists($matchingExceptionName) === false) {
+                    $matchingExceptionName = $alternative;
+                }
             } else {
                 $exceptionName = $this->getMatchingExceptionName($exceptionName);
 
@@ -84,8 +92,6 @@ class GetCompatibleExceptionName extends AbstractTraitShim
     private function getMatchingExceptionName($exceptionName)
     {
         $matchingExceptions = array(
-            // PHP 7.1 thrown when too few arguments are passed to a user-defined function or method.
-            'ArgumentCountError' => '\PHPUnit_Framework_Error',
             // PHP 7.0 thrown when an assertion made via assert() fails.
             'AssertionError' => '\PHPUnit_Framework_Error_Warning',
             // PHP 7.0 thrown when an attempt is made to divide a number by zero.
