@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 abstract class AbstractTraitShim implements TraitShimInterface
 {
     ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -24,7 +26,7 @@ abstract class AbstractTraitShim implements TraitShimInterface
     /**
      * @param $testcase \PHPUnit\Framework\TestCase | \PHPUnit_Framework_TestCase
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public function __construct($testcase)
     {
@@ -45,7 +47,7 @@ abstract class AbstractTraitShim implements TraitShimInterface
                     $type,
                 )
             );
-            throw new \InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         $this->testcase = $testcase;
@@ -75,7 +77,7 @@ abstract class AbstractTraitShim implements TraitShimInterface
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public function getExistingClassName($class, $alternative = '')
     {
@@ -99,10 +101,10 @@ abstract class AbstractTraitShim implements TraitShimInterface
 
             if ($alternative === '') {
                 $message = vsprintf(
-                    'Could not find class for "%". Both "%s" and "%s" do not exist',
+                    'Could not find class for "%s". Both "%s" and "%s" do not exist',
                     array($class, $nonNamespacedClass, $namespacedClass)
                 );
-                throw new \InvalidArgumentException($message);
+                throw new InvalidArgumentException($message);
             }
 
             $existingClass = $this->getExistingClassName($alternative);

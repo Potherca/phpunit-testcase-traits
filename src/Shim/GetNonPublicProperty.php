@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 class GetNonPublicProperty extends AbstractTraitShim
 {
 
@@ -18,7 +20,7 @@ class GetNonPublicProperty extends AbstractTraitShim
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public function getNonPublicProperty($subject, $name)
     {
@@ -35,7 +37,7 @@ class GetNonPublicProperty extends AbstractTraitShim
      *
      * @return \ReflectionProperty
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public function getPropertyFromObject($subject, $name)
     {
@@ -49,7 +51,7 @@ class GetNonPublicProperty extends AbstractTraitShim
 
         if ($reflectionProperty === null) {
             $message = vsprintf('Could not find non-public property "%s" in "%s"', array($name, get_class($subject)));
-            throw new \InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         $reflectionProperty->setAccessible(true);

@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 /**
  * @TODO: Add support for `ArithmeticError`
  *
@@ -18,7 +20,7 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \PHPUnit_Framework_Exception | \PHPUnit\Framework\Exception
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_SkippedTestError|\PHPUnit\Framework\SkippedTestError
@@ -29,7 +31,7 @@ class GetCompatibleExceptionName extends AbstractTraitShim
 
         try {
             $exceptionName = $this->getExistingClassName($exceptionName);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             // Not an existing class, needs conversion
         }
 
@@ -38,7 +40,7 @@ class GetCompatibleExceptionName extends AbstractTraitShim
         if ($this->isPhpUnitExceptionNeeded($exceptionName) === false) {
             if ($exceptionName === 'DivisionByZeroError') {
                 $this->getTestcase()->expectExceptionMessage('Division by zero');
-                $matchingExceptionName = '\PHPUnit_Framework_Error_Warning';
+                $matchingExceptionName = '\\PHPUnit_Framework_Error_Warning';
             } else {
                 $matchingExceptionName = '\\'.$exceptionName;
             }
@@ -57,8 +59,8 @@ class GetCompatibleExceptionName extends AbstractTraitShim
                 $exceptionName = $this->getMatchingExceptionName($exceptionName);
 
                 $alternative = '';
-                if ($exceptionName === '\PHPUnit_Framework_Error') {
-                    $alternative = 'PHPUnit\Framework\Error\Error';
+                if ($exceptionName === '\\PHPUnit_Framework_Error') {
+                    $alternative = 'PHPUnit\\Framework\\Error\\Error';
                 }
 
                 $matchingExceptionName = $this->getExistingClassName($exceptionName, $alternative);
@@ -93,16 +95,16 @@ class GetCompatibleExceptionName extends AbstractTraitShim
     {
         $matchingExceptions = array(
             // PHP 7.0 thrown when an assertion made via assert() fails.
-            'AssertionError' => '\PHPUnit_Framework_Error_Warning',
+            'AssertionError' => '\\PHPUnit_Framework_Error_Warning',
             // PHP 7.0 thrown when an attempt is made to divide a number by zero.
-            'DivisionByZeroError' => '\PHPUnit_Framework_Error_Warning',
+            'DivisionByZeroError' => '\\PHPUnit_Framework_Error_Warning',
             // PHP 7.0 base class for all internal PHP errors.
-            'Error' => '\PHPUnit_Framework_Error',
+            'Error' => '\\PHPUnit_Framework_Error',
             // PHP 7.0 thrown in one of three circumstances:
             // - an argument type passed to a function does not match the declared parameter type.
             // - a value returned from a function does not match the declared return type.
             // - an invalid number of arguments are passed to a built-in PHP function (strict mode only).
-            'TypeError' => '\PHPUnit_Framework_Error',
+            'TypeError' => '\\PHPUnit_Framework_Error',
         );
 
         if (array_key_exists($exceptionName, $matchingExceptions) === false) {
