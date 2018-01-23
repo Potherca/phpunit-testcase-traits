@@ -29,7 +29,7 @@
     "trait",
     "traits"
   ],
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "name": "potherca/phpunit-testcase-traits",
   "require": {
     "php": "~5.3 | ~7.0",
