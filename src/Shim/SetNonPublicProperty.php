@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 class SetNonPublicProperty extends GetNonPublicProperty
 {
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -15,7 +17,7 @@ class SetNonPublicProperty extends GetNonPublicProperty
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public function setNonPublicProperty($subject, $name, $value)
     {

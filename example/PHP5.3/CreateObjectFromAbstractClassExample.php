@@ -17,7 +17,7 @@ class ExampleTest extends \PHPUnit\Framework\TestCase
     /**
      * As PHP5.3 does not support traits, __call is (a)bused instead of the trait.
      *
-     use \Potherca\PhpUnit\CreateObjectFromAbstractClassTrait;
+     use \Potherca\PhpUnit\Traits\CreateObjectFromAbstractClassTrait;
      *
      * @param string $name
      * @param array $parameters

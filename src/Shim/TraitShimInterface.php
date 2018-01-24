@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 interface TraitShimInterface
 {
     /**
@@ -12,7 +14,7 @@ interface TraitShimInterface
     /**
      * @param $testcase \PHPUnit\Framework\TestCase | \PHPUnit_Framework_TestCase
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($testcase);
 
@@ -31,7 +33,7 @@ interface TraitShimInterface
      *
      * @return string
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getExistingClassName($class);
 }

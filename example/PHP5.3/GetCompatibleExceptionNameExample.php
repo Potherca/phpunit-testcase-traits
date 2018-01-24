@@ -14,7 +14,7 @@ class ExampleTest extends AbstractTestCase
     /**
      * As PHP5.3 does not support traits, __call is (a)bused instead of the trait.
      *
-     use \Potherca\PhpUnit\GetCompatibleExceptionNameTrait;
+     use \Potherca\PhpUnit\Traits\GetCompatibleExceptionNameTrait;
      *
      * @param string $name
      * @param array $parameters

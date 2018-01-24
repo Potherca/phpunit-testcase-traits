@@ -2,8 +2,13 @@
 
 namespace Potherca\PhpUnit\Shim;
 
+use Potherca\PhpUnit\InvalidArgumentException;
+
 class Util
 {
+    const NAMESPACE_PREFIX_LENGTH = 24; // = strlen('Potherca\\PhpUnit\\Traits\\');
+    const NAMESPACE_SUFFIX_LENGTH = -5; // = strlen('Trait');
+
     /**
      * Traits were not introduced until PHP5.4 so for older versions (i.e. PHP5.3)
      * this method loads the trait's functionality. This function should be called
@@ -26,7 +31,7 @@ class Util
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     final public static function traitShim($testcase, $functionName, array $parameters)
     {
@@ -49,7 +54,7 @@ class Util
                     $type,
                 )
             );
-            throw new \InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
         $traitShimClass =  __NAMESPACE__.'\\'.ucfirst($functionName);
@@ -95,7 +100,7 @@ class Util
      * @param string $methodName
      * @param string $traitName
      *
-     * @throws \InvalidArgumentException If no Shim class can be found for a given trait
+     * @throws InvalidArgumentException If no Shim class can be found for a given trait
      *
      * @return Callable
      */
@@ -125,9 +130,7 @@ class Util
             } else {
                 // Only create shim class if native function does not exist
 
-                $start = strlen('Potherca\PhpUnit')+1;
-                $end = -5;  // 5 = "Trait"
-                $name = substr($traitName, $start, $end);
+                $name = substr($traitName, self::NAMESPACE_PREFIX_LENGTH, self::NAMESPACE_SUFFIX_LENGTH);
 
                 $shimClass = vsprintf('%s\\%s', array(__NAMESPACE__, $name));
 
@@ -142,7 +145,7 @@ class Util
 
                 if (class_exists($shimClass) === false) {
                     $message = vsprintf('Could not find class "%s" to create for trait "%s"', array($shimClass, $traitName));
-                    throw new \InvalidArgumentException($message);
+                    throw new InvalidArgumentException($message);
                 }
 
                 $implements = class_implements($shimClass);
@@ -153,7 +156,7 @@ class Util
                         'Found class "%s" for trait "%s" but it does not implement "%s"',
                         array($shimClass, $traitName, $interface)
                     );
-                    throw new \InvalidArgumentException($message);
+                    throw new InvalidArgumentException($message);
                 }
 
                 $class[$key] = new $shimClass($testCase);

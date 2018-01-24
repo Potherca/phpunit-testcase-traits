@@ -14,7 +14,7 @@ abstract class AbstractExample
 
 class ExampleTest extends \PHPUnit\Framework\TestCase
 {
-    use \Potherca\PhpUnit\CreateObjectFromAbstractClassTrait;
+    use \Potherca\PhpUnit\Traits\CreateObjectFromAbstractClassTrait;
 
     const MOCK_VALUE = 'mock-value';
 
