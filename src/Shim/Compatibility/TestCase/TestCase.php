@@ -16,8 +16,8 @@
  * This file makes sure that `\PHPUnit\Framework\TestCase` always exist.
  */
 namespace PHPUnit\Framework {
-    if (class_exists('\PHPUnit\Framework\TestCase') === false
-        && class_exists('\PHPUnit_Framework_TestCase') === true
+    if (class_exists('\\PHPUnit\\Framework\\TestCase') === false
+        && class_exists('\\PHPUnit_Framework_TestCase') === true
     ) {
         abstract class TestCase extends \PHPUnit_Framework_TestCase {}
     }

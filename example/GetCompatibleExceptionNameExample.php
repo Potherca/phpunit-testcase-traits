@@ -16,7 +16,7 @@ class ExampleTest extends AbstractTestCase
     public function testException()
     {
         // Please not that `\TypeError::class` is NOT used, as this will cause an error if `TypeError` does not exist.
-        $exceptionName = $this->getCompatibleExceptionName('\TypeError');
+        $exceptionName = $this->getCompatibleExceptionName('\\TypeError');
 
         if (method_exists($this, 'expectExceptionMessageRegExp')) {
             /* PHPUnit ^5.2 | ^6.0 */
