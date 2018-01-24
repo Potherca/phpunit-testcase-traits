@@ -61,12 +61,7 @@ abstract class AbstractTraitShimTest extends AbstractTestCase
         $calledClass = get_called_class();
         $calledClass = substr($calledClass, 0, -4); // 4 = strlen('Test')
 
-        $mockName = class_exists('\PHPUnit_Framework_TestCase')
-            ? '\PHPUnit_Framework_TestCase'
-            : '\PHPUnit\Framework\TestCase'
-        ;
-
-        $mockTestCase = $this->getMockBuilder($mockName)->disableOriginalConstructor()->getMockForAbstractClass();
+        $mockTestCase = $this->getMockTestCase();
 
         $shim = new $calledClass($mockTestCase);
 
@@ -148,6 +143,22 @@ abstract class AbstractTraitShimTest extends AbstractTestCase
     final public function testShim_Should_When_GetExistingClassName()
     {
         $this->markTestIncomplete('@TODO: Write tests for \Potherca\PhpUnit\Shim\AbstractTraitShim::getExistingClassName()');
+    }
+
+    ////////////////////////////// MOCKS AND STUBS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    /**
+     * @return mixed
+     */
+    final public function getMockTestCase()
+    {
+        $mockName = class_exists('\PHPUnit_Framework_TestCase')
+            ? '\PHPUnit_Framework_TestCase'
+            : '\PHPUnit\Framework\TestCase';
+
+        $mockTestCase = $this->getMockBuilder($mockName)->disableOriginalConstructor()->getMockForAbstractClass();
+
+        return $mockTestCase;
     }
 }
 
