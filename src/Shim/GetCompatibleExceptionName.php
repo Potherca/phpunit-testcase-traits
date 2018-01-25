@@ -5,8 +5,6 @@ namespace Potherca\PhpUnit\Shim;
 use Potherca\PhpUnit\InvalidArgumentException;
 
 /**
- * @TODO: Add support for `ArithmeticError`
- *
  * @method expectExceptionMessage($message)
  * @method fail($message)
  * @method markTestSkipped($message)
@@ -21,13 +19,15 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      * @return string
      *
      * @throws InvalidArgumentException
-     * @throws \PHPUnit_Framework_Exception | \PHPUnit\Framework\Exception
+     *
+     * @throws \PHPUnit_Framework_Exception|\PHPUnit\Framework\Exception
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_SkippedTestError|\PHPUnit\Framework\SkippedTestError
      */
     final public function getCompatibleExceptionName($exceptionName)
     {
         $matchingExceptionName = '';
+        $alternative = '';
 
         try {
             $exceptionName = $this->getExistingClassName($exceptionName);
@@ -47,27 +47,27 @@ class GetCompatibleExceptionName extends AbstractTraitShim
         } else {
             if ($exceptionName === 'ParseError') {
                 $this->getTestcase()->markTestSkipped('Parse errors can not be caught in PHP5');
+            } elseif ($exceptionName === 'ArithmeticError') {
+                /* PHP 7.0 thrown when an error occurs while performing
+                 * mathematical operations. As I have not been able to find the
+                 * PHP5 equivalent, marking as skipped until a working example
+                 * is available
+                 */
+                $this->getTestcase()->markTestSkipped('There are no equivalent for Arithmetic errors in PHP5 ');
             } elseif ($exceptionName === 'ArgumentCountError') {
                 // PHP 7.1 thrown when too few arguments are passed to a user-defined function or method.
-                $alternative = '\\PHPUnit_Framework_Error_Warning';
-
-                $matchingExceptionName = '\\PHPUnit\\Framework\\Error\\Warning';
-                if (class_exists($matchingExceptionName) === false) {
-                    $matchingExceptionName = $alternative;
-                }
+                // PHP 7.0 throws a TypeError with message 'none given'
+                $matchingExceptionName = $this->getCompatibleExceptionName('\\TypeError');
             } else {
-                $exceptionName = $this->getMatchingExceptionName($exceptionName);
+                $matchingExceptionName = $this->getMatchingExceptionName($exceptionName);
 
-                $alternative = '';
-                if ($exceptionName === '\\PHPUnit_Framework_Error') {
-                    $alternative = 'PHPUnit\\Framework\\Error\\Error';
+                if ($matchingExceptionName === '\\PHPUnit_Framework_Error') {
+                    $alternative = '\\PHPUnit\\Framework\\Error\\Error';
                 }
-
-                $matchingExceptionName = $this->getExistingClassName($exceptionName, $alternative);
             }
         }
 
-        return $matchingExceptionName;
+        return $this->getExistingClassName($matchingExceptionName, $alternative);
     }
 
     ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -79,9 +79,15 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      */
     private function isPhpUnitExceptionNeeded($exceptionName)
     {
-        return class_exists('\\' . $exceptionName) === false
-            /* @NOTE: The line below validates that the Exception does not extend the PHP7 "Throwable" interface */
-            || class_implements('\\' . $exceptionName) === array();
+        $exists = class_exists('\\' . $exceptionName);
+
+        $extends = false;
+        if ($exists === true) {
+            /* @NOTE: This validates the Exception does not extend the PHP7 "Throwable" interface */
+            $extends = class_implements('\\' . $exceptionName) !== array();
+        }
+
+        return $exists === false && $extends === false;
     }
 
     /**
@@ -89,7 +95,7 @@ class GetCompatibleExceptionName extends AbstractTraitShim
      *
      * @return string
      *
-     * @throws \PHPUnit\Framework_AssertionFailedError | \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit_Framework_AssertionFailedError | \PHPUnit\Framework\AssertionFailedError
      */
     private function getMatchingExceptionName($exceptionName)
     {
