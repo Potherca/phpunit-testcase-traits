@@ -2,9 +2,12 @@
 
 namespace Potherca\PHPUnit\Example\GetCompatibleExceptionName;
 
+use Potherca\PhpUnit\Shim\GetCompatibleExceptionName;
+
 class Example
 {
     public function __construct(array $value) {}
+    public function example($value) {}
 }
 
 abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase {}
@@ -44,10 +47,10 @@ class ExampleTest extends AbstractTestCase
         1 >> -1;
     }
 
-    public function testArgumentCountError()
+    public function testArgumentCountErrorWithTypeHint()
     {
         // Please note that `\ArgumentCountError::class` is NOT used, as this will cause an error if `ArgumentCountError` does not exist.
-        $exceptionName = $this->getCompatibleExceptionName('\\ArgumentCountError');
+        $exceptionName = $this->getCompatibleExceptionName('\\ArgumentCountError', GetCompatibleExceptionName::ARGUMENT_COUNT_ERROR_WITH_TYPE_HINT);
 
         if (method_exists($this, 'expectExceptionMessageRegExp')) {
             /* PHPUnit ^5.2 | ^6.0 */
@@ -60,6 +63,26 @@ class ExampleTest extends AbstractTestCase
 
         /** @noinspection PhpParamsInspection */
         new Example();
+    }
+
+    public function testArgumentCountErrorWithoutTypeHint()
+    {
+        // Please note that `\ArgumentCountError::class` is NOT used, as this will cause an error if `ArgumentCountError` does not exist.
+        $exceptionName = $this->getCompatibleExceptionName('\\ArgumentCountError', GetCompatibleExceptionName::ARGUMENT_COUNT_ERROR_WITHOUT_TYPE_HINT);
+
+        if (method_exists($this, 'expectExceptionMessageRegExp')) {
+            /* PHPUnit ^5.2 | ^6.0 */
+            $this->expectException($exceptionName);
+            $this->expectExceptionMessageRegExp('/Too few arguments to function|Missing argument 1/');
+        } else {
+            /* PHPUnit ^4.3 | =< 5.6 */
+            $this->setExpectedExceptionRegExp($exceptionName, '/Too few arguments to function|Missing argument 1/');
+        }
+
+        $example = new Example(array());
+
+        /** @noinspection PhpParamsInspection */
+        $example->example();
     }
 
     public function testDivisionByZeroError()

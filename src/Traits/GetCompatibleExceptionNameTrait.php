@@ -68,13 +68,14 @@ trait GetCompatibleExceptionNameTrait
 
     /**
      * @param string $exceptionName
+     * @param string $context
      *
      * @return string
      *
      * @throws \PHPUnit_Framework_AssertionFailedError|\PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit_Framework_SkippedTestError|\PHPUnit\Framework\SkippedTestError
      */
-    final public function getCompatibleExceptionName($exceptionName)
+    final public function getCompatibleExceptionName($exceptionName, $context = '')
     {
         return call_user_func_array(
             \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
