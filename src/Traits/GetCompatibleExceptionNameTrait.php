@@ -47,7 +47,7 @@ namespace Potherca\PhpUnit\Traits;
  *        public function testException()
  *        {
  *            // Please not that `\TypeError::class` is NOT used, as this will cause an error if `TypeError` does not exist.
- *            $exceptionName = $this->getCompatibleExceptionName('\TypeError');
+ *            $exceptionName = $this->getCompatibleExceptionName('\\TypeError');
  *
  *            $this->expectException($exceptionName);
  *            $this->expectExceptionMessageRegExp('/none given|0 passed/');

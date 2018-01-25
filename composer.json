@@ -14,6 +14,11 @@
       "Potherca\\PhpUnit\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Potherca\\PhpUnit\\": "tests/unit/"
+    }
+  },
   "config": {
     "sort-packages": true
   },

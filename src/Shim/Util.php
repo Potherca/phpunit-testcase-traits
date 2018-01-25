@@ -50,7 +50,7 @@ class Util
                 'Argument 1 passed to %s must be an instance of %s, %s given',
                 array(
                     __METHOD__,
-                    '"\PHPUnit_Framework_TestCase" or "\PHPUnit\Framework\TestCase"',
+                    '"\\PHPUnit_Framework_TestCase" or "\\PHPUnit\\Framework\\TestCase"',
                     $type,
                 )
             );
@@ -149,7 +149,7 @@ class Util
                 }
 
                 $implements = class_implements($shimClass);
-                $interface = 'Potherca\PhpUnit\Shim\TraitShimInterface';
+                $interface = 'Potherca\\PhpUnit\\Shim\\TraitShimInterface';
 
                 if (in_array($interface, $implements, true) === false) {
                     $message = vsprintf(
