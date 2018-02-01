@@ -30,8 +30,8 @@ abstract class AbstractTraitShim implements TraitShimInterface
      */
     final public function __construct($testcase)
     {
-        if ($testcase instanceof \PHPUnit\Framework\TestCase === false &&
-            $testcase instanceof \PHPUnit_Framework_TestCase === false
+        if ($testcase instanceof \PHPUnit\Framework\TestCase === false
+            && $testcase instanceof \PHPUnit_Framework_TestCase === false
         ) {
             $type = gettype($testcase);
 

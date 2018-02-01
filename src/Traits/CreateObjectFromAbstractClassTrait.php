@@ -62,7 +62,6 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  *
  * @method fail($message)
  * @method \PHPUnit_Framework_MockObject_MockBuilder getMockBuilder($className)
- *
  */
 trait CreateObjectFromAbstractClassTrait
 {

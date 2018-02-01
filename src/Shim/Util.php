@@ -37,8 +37,8 @@ class Util
     {
         $result = null;
 
-        if ($testcase instanceof \PHPUnit\Framework\TestCase === false &&
-            $testcase instanceof \PHPUnit_Framework_TestCase === false
+        if ($testcase instanceof \PHPUnit\Framework\TestCase === false
+            && $testcase instanceof \PHPUnit_Framework_TestCase === false
         ) {
             $type = gettype($testcase);
 
@@ -111,7 +111,6 @@ class Util
         $key = $traitName.'::'.$methodName;
 
         if (isset($class[$key]) === false) {
-
             $subject = $testCase;
 
             $exists = false;

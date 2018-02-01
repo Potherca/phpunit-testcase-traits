@@ -8,12 +8,14 @@ namespace Potherca\PhpUnit\Shim;
 class CreateDataProvider extends AbstractTraitShim
 {
     ////////////////////////////// CLASS PROPERTIES \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     /** @var int */
     private $maximumKeyLength = 25;
     /** @var bool */
     private $sortByKey = true;
 
     //////////////////////////// SETTERS AND GETTERS \\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     /** @param int $length */
     final public function setDataProviderMaximumKeyLength($length)
     {
@@ -27,6 +29,7 @@ class CreateDataProvider extends AbstractTraitShim
     }
 
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     /**
      * @param array $subject
      *
