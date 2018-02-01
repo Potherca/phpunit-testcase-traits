@@ -108,10 +108,16 @@ class Util
     {
         static $class;
 
-        $key = $traitName.'::'.$methodName;
+        $hash = spl_object_hash($testCase);
+
+        $key = vsprintf('%s::%s::%s', array(
+            'trait' => $traitName,
+            'method' => $methodName,
+            'testcase' => $hash,
+        ));
 
         if (isset($class[$key]) === false) {
-            $subject = $testCase;
+            $subject = get_class($testCase);
 
             $exists = false;
             do {
