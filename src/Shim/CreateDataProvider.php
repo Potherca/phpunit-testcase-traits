@@ -141,7 +141,7 @@ class CreateDataProvider extends AbstractTraitShim
             $keys = array_keys($subjectWithKeys);
 
             /* @NOTE: The constant `SORT_NATURAL` was not introduced until PHP5.4 so a substitute is used */
-            defined('SORT_NATURAL') OR define('SORT_NATURAL', SORT_STRING);
+            defined('SORT_NATURAL') or define('SORT_NATURAL', SORT_STRING);
 
             array_multisort($keys, SORT_NATURAL/*| SORT_FLAG_CASE*/, $subjectWithKeys);
         }

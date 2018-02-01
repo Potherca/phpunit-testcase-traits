@@ -2,6 +2,8 @@
 
 namespace Potherca\PhpUnit;
 
-class InvalidArgumentException extends \InvalidArgumentException {}
+class InvalidArgumentException extends \InvalidArgumentException
+{
+}
 
 /*EOF*/

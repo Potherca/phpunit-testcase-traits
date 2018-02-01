@@ -98,7 +98,6 @@ abstract class AbstractTraitShim implements TraitShimInterface
         });
 
         if ($existingClass === null) {
-
             if ($alternative === '') {
                 $message = vsprintf(
                     'Could not find class for "%s". Both "%s" and "%s" do not exist',

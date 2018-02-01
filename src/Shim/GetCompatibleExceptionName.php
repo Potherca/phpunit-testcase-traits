@@ -14,7 +14,9 @@ class GetCompatibleExceptionName extends AbstractTraitShim
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     const ARGUMENT_COUNT_ERROR_WITH_TYPE_HINT = 'type-hint';
     const ARGUMENT_COUNT_ERROR_WITHOUT_TYPE_HINT = 'no-type-hint';
-    const ERROR_CONTEXT_NEEDED = '%s needs a context to decide which exception name to provide. Available options are: "%s"';
+    const ERROR_CONTEXT_NEEDED =
+        '%s needs a context to decide which exception name to provide. Available options are: "%s"'
+    ;
 
     /**
      * @param string $exceptionName
@@ -84,7 +86,6 @@ class GetCompatibleExceptionName extends AbstractTraitShim
                 $matchingExceptionName = $candidates[$candidate];
             } else {
                 $matchingExceptionName = $this->getMatchingExceptionName($exceptionName);
-
             }
         }
 

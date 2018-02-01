@@ -14,6 +14,8 @@
  * version is missing.
  *
  * This file makes sure that `\PHPUnit\Framework\TestCase` always exist.
+ *
+ * @codingStandardsIgnoreFile
  */
 namespace PHPUnit\Framework {
     if (class_exists('\\PHPUnit\\Framework\\TestCase') === false

@@ -46,7 +46,8 @@ namespace Potherca\PhpUnit\Traits;
  *
  *        public function testException()
  *        {
- *            // Please not that `\TypeError::class` is NOT used, as this will cause an error if `TypeError` does not exist.
+ *            // Please note that `\TypeError::class` is NOT used, as this will
+ *            // cause an error if `TypeError` does not exist.
  *            $exceptionName = $this->getCompatibleExceptionName('\\TypeError');
  *
  *            $this->expectException($exceptionName);
@@ -78,7 +79,7 @@ trait GetCompatibleExceptionNameTrait
     final public function getCompatibleExceptionName($exceptionName, $context = '')
     {
         return call_user_func_array(
-            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this, __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }

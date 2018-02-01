@@ -116,9 +116,7 @@ class Util
 
             $exists = false;
             do {
-
-                if (
-                    ($subject === 'PHPUnit\\Framework\\TestCase' || $subject === 'PHPUnit_Framework_TestCase')
+                if (($subject === 'PHPUnit\\Framework\\TestCase' || $subject === 'PHPUnit_Framework_TestCase')
                     && method_exists($subject, $methodName) === true
                 ) {
                     $exists = $subject;
@@ -135,7 +133,8 @@ class Util
                 $shimClass = vsprintf('%s\\%s', array(__NAMESPACE__, $name));
 
                 if (method_exists($shimClass, $methodName) === false) {
-                    /* CHECKME: Shouldn't we always check METHOD instead of TRAIT as class and method are equals for shims ? */
+                    /* CHECKME: Shouldn't we always check METHOD instead of TRAIT?
+                                (as class and method are equals for shims) */
                     /* Shim class does not match trait name, fallback to Shim class based on method name */
                     $end = strrpos($shimClass, '\\');
                     $name = substr($shimClass, 0, $end);
@@ -144,7 +143,10 @@ class Util
                 }
 
                 if (class_exists($shimClass) === false) {
-                    $message = vsprintf('Could not find class "%s" to create for trait "%s"', array($shimClass, $traitName));
+                    $message = vsprintf(
+                        'Could not find class "%s" to create for trait "%s"',
+                        array($shimClass, $traitName)
+                    );
                     throw new InvalidArgumentException($message);
                 }
 
@@ -165,7 +167,6 @@ class Util
 
         return array($class[$key], $methodName);
     }
-
 }
 
 /*EOF*/

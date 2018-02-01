@@ -79,7 +79,7 @@ trait CreateObjectFromAbstractClassTrait
     final public function createObjectFromAbstractClass($className, array $arguments = null)
     {
         return call_user_func_array(
-            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this, __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }

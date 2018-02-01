@@ -81,7 +81,7 @@ trait CreateDataProviderTrait
     final public function setDataProviderMaximumKeyLength($length)
     {
         call_user_func_array(
-            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this, __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }
@@ -90,7 +90,7 @@ trait CreateDataProviderTrait
     final public function setDataProviderSortByKey($sort)
     {
         call_user_func_array(
-            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this, __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }
@@ -105,7 +105,7 @@ trait CreateDataProviderTrait
     final public function createDataProvider(array $subject)
     {
         return call_user_func_array(
-            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this,  __FUNCTION__, __TRAIT__),
+            \Potherca\PhpUnit\Shim\Util::createShimForTrait($this, __FUNCTION__, __TRAIT__),
             func_get_args()
         );
     }
