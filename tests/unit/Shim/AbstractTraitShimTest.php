@@ -5,10 +5,12 @@ namespace Potherca\PhpUnit\Shim;
 use Potherca\PhpUnit\AbstractTestCase;
 
 /*/ Mock function from global scope. Ugly but functional /*/
-$container = new \stdClass();
-$container->args = null;
-    function call_user_func_array($function, $params) {
+function call_user_func_array($function, $params) {
     global $container;
+
+    if ($container === null) {
+        $container = new \stdClass();
+    }
 
     $container->args = func_get_args();
 }
