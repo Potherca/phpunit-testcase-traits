@@ -37,7 +37,7 @@
   "license": "GPL-3.0-or-later",
   "name": "potherca/phpunit-testcase-traits",
   "require": {
-    "php": "~5.3 | ~7.0",
+    "php": "8.3.4",
     "phpunit/phpunit": "~4.0 | ~5.0 | ~6.0"
   },
   "type": "library"
